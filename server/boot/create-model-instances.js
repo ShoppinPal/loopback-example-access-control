@@ -1,10 +1,21 @@
 var debug = require('debug')('boot:create-model-instances');
 
+var createApplication = function(Application, model, callback){
+  Application.findOrCreate( // do NOT create a new Application everytime, if persistence is available
+    { // find
+      where: {name: model.name}
+    },
+    model, // or Create
+    callback
+  );
+};
+
 module.exports = function(app) {
   var User = app.models.user;
   var Role = app.models.Role;
   var RoleMapping = app.models.RoleMapping;
   var Team = app.models.Team;
+  var Application = app.models.Application;
 
   User.create([
     {username: 'John', email: 'john@doe.com', password: 'opensesame'},
@@ -63,4 +74,24 @@ module.exports = function(app) {
       });
     });
   });
+
+  // DEBUG=boot:create-model-instances node server/server.js
+  var appModel = {
+    owner: 'ShoppinPal',
+    name: 'jsClient',
+    description: 'JavaScript Client',
+    masterKey: 'aaa'
 };
+  createApplication(Application, appModel, function(err, app) {
+    if (err) throw err;
+    debug(app);
+
+    // sanity test - previous and next applications should both be the same
+    createApplication(Application, appModel, function(err, app) {
+      if (err) throw err;
+      debug(app);
+    });
+
+  });
+};
+

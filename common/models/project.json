@@ -58,6 +58,12 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "withdraw"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$masterKey",
+      "permission": "ALLOW"
     }
   ],
   "methods": []

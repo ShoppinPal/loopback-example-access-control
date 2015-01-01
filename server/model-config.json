@@ -36,5 +36,9 @@
   "team": {
     "dataSource": "db",
     "public": false
+  },
+  "Application": {
+    "dataSource": "db",
+    "public": false
   }
 }
