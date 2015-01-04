@@ -51,7 +51,9 @@ module.exports = function(app) {
           //throw err;
         }
         debug(app);
-        callback(null, (app && app.length===1));
+        //callback(null, (app && app.length===1));
+        // TODO: revert after https://github.com/strongloop/loopback/issues/969 is fixed
+        callback(null, (masterKey && app && app.length===1));
       });
 
   });
